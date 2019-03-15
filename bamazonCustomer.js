@@ -11,15 +11,22 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  console.log("Connection Successful");
+  //console.log("Connection Successful");
   displayItems();
 });
 //logging each product's main info
 var displayItems = function(){
   connection.query("SELECT * FROM products", function(err, res){
+    console.log(" ");
+    console.log("+------------------------------------------------------------------------------+");
+    console.log("PRODUCT LIST");
+    console.log("+------------------------------------------------------------------------------+");
+
     for (var i = 0; i < res.length; i++){
-      console.log("Item Number: " + res[i].item_id + "\n" + "Product Name: " + res[i].product_name + "\n" + "Product Price: $" + res[i].price + "\n");
+      console.log(res[i].item_id + " --- PRODUCT NAME: " + res[i].product_name + " || PRICE: $" + res[i].price);
     }
+
+    console.log("+------------------------------------------------------------------------------+\n");
     purchaseItem(res);
   });
 }
