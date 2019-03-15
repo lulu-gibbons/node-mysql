@@ -24,30 +24,38 @@ var displayItems = function(){
   });
 }
 //Customer prompts
-var purchaseItem = function(res){
-  //console.log(res);
+function purchaseItem(){
+  connection.query("SELECT * FROM products", function(err, res) {
+		if (err) throw err;
+
+    //console.log(res);
+
   inquirer.prompt([{
     type: 'input',
     name: 'choice',
     message: "What product would you like to buy?"
   }]).then(function(answer){
+
     var correct = false;
+
     for (var i = 0; i < res.length; i++) {
       if (res[i].product_name == answer.choice) {
         correct = true;
         var product = answer.choice;
         var id = i;
-        inquirer.prompt({
+
+        inquirer.prompt({ //customer prompt for quantity to buy
           type: 'input',
           name: 'quantity',
           message: "How many would you like to buy?",
-          validate: function(value){
+          validate: function(value){ //validates the entry
             if(isNaN(value) == false){
               return true;
             } else {
               return false;
             }
           }
+          //Updates product stock in mysql database after a purchase is made
         }).then(function(answer){
           if((res[id].stock_quantity-answer.quantity)>0){
             connection.query("UPDATE products SET stock_quantity='"+(res[id].stock_quantity-answer.quantity)+"' where product_name='"+product+"'", function (err, res2){
@@ -58,20 +66,40 @@ var purchaseItem = function(res){
               console.log("Your Total is $" + res[id].price * answer.quantity);
               console.log("===============================");
               console.log(" ");
-
-              
+              //connection.end();
+              continueShopping();
 
             })
           } else {
+            //produces an error if that product is out of stock
             console.log("Insufficient Quantity. Please select a different item.");
             purchaseItem(res);
           }
         })
       }
     }
+    //produces an error message when an incorrect input has been entered
     if(i==res.length && correct==false){
       console.log("That product isn't available. Please enter a valid product.");
       purchaseItem(res);
     }
   })
+})
+}
+
+function continueShopping(){
+	inquirer
+		.prompt([{
+			name: "yes",
+			type: "confirm",
+			message: "Would you like to continue shopping?\n"
+		}]).then(function(answer) {
+		if(answer.yes) {
+			purchaseItem();
+		}
+		else {
+			console.log("Thanks for shopping with us!");
+			connection.end();
+		}
+	});
 }
