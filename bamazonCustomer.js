@@ -51,8 +51,16 @@ var purchaseItem = function(res){
         }).then(function(answer){
           if((res[id].stock_quantity-answer.quantity)>0){
             connection.query("UPDATE products SET stock_quantity='"+(res[id].stock_quantity-answer.quantity)+"' where product_name='"+product+"'", function (err, res2){
-              console.log("Product Purchased.");
-            
+
+              console.log(" ");
+              console.log("===============================");
+              console.log("Thank you for your purchase of " + answer.quantity + " " + res[id].product_name + ".");
+              console.log("Your Total is $" + res[id].price * answer.quantity);
+              console.log("===============================");
+              console.log(" ");
+
+              
+
             })
           } else {
             console.log("Insufficient Quantity. Please select a different item.");
