@@ -13,4 +13,16 @@
    * [Inquirer NPM Package](https://www.npmjs.com/package/inquirer)
 
 
-## Screenshots of Functioning App:
+## Screenshots of Functioning App (Customer View):
+
+Product List:
+![alt text](https://github.com/lulu-gibbons/node-mysql/blob/master/images/Product%20List.png "Storefront Project - Product List")
+
+Shopping prompts including 'Continue Shopping?' prompt and purchase display:
+![alt text](https://github.com/lulu-gibbons/node-mysql/blob/master/images/Continue%20Shopping%20Feature.png "Storefront Project - customer shopping prompts and purchase display")
+
+Error displayed after incorrect input:
+![alt text](https://github.com/lulu-gibbons/node-mysql/blob/master/images/incorrect%20input.pngg "Storefront Project - error displayed after incorrect input")
+
+Insufficient Quantity error when there isn't enough product in stock:
+![alt text](https://github.com/lulu-gibbons/node-mysql/blob/master/images/insufficiant%20quantity.png "Storefront Project - Error displayed when there is no stock or not enough stock")
